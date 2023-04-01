@@ -11,9 +11,9 @@ def init():
     print('Could not connect to database.')
     exit()
   cursor = sqliteConnect.cursor()
-  cursor.execute('CREATE TABLE IF NOT EXISTS TT(ID INTEGER PRIMARY KEY, Teams TEXT UNIQUE)') # Tournament Teams Table
+  cursor.execute('CREATE TABLE IF NOT EXISTS TT(ID INTEGER PRIMARY KEY, Teams TEXT, MatchesPlayed INTEGER DEFAULT 0, MatchesWon INTEGER DEFAULT 0, HighestRunScorer INTEGER DEFAULT 0, HighestWicketTaker INTEGER DEFAULT 0, Last5Matches DEFAULT "NA")') # Tournament Teams Table
   cursor.execute('CREATE TABLE IF NOT EXISTS MD(ID INTEGER PRIMARY KEY, TeamA INT NOT NULL, TeamB INT NOT NULL, DetailsGenerated BOOLEAN NOT NULL DEFAULT 0, Result INT, BatFirst BOOLEAN, TeamARuns INT, TeamAWickets INT, TeamABalls INT, TeamBRuns INT, TeamBWickets INT, TeamBBalls INT, FOREIGN KEY(TeamA) REFERENCES TT(ID), FOREIGN KEY(TeamB) REFERENCES TT(ID))') # Match Details Table
-  cursor.execute('CREATE TABLE IF NOT EXISTS PD(ID INTEGER PRIMARY KEY, Name TEXT, Age INT, Hand BOOLEAN, TeamID NOT NULL, FOREIGN KEY(TeamID) REFERENCES TT(ID))') # Player Details Table
+  cursor.execute('CREATE TABLE IF NOT EXISTS PD(ID INTEGER PRIMARY KEY, Name TEXT, Age INT, Hand BOOLEAN, TeamID NOT NULL, MatchesPlayed INTEGER DEFAULT 0, RunsScored INTEGER DEFAULT 0, BallsFaced INTEGER DEFAULT 0, BallsBowled INTEGER DEFAULT 0, WicketsTaken INTEGER DEFAULT 0, FOREIGN KEY(TeamID) REFERENCES TT(ID))') # Player Details Table
   sqliteConnect.commit()
     
 # Get the number of teams
@@ -34,6 +34,15 @@ def numMatches():
     return cursor.fetchone()[0]
   except:
     # If MD table does not exist
+    return 0
+  
+def numPlayers():
+  global sqliteConnect, cursor
+  try:
+    cursor.execute('SELECT COUNT(*) FROM PD')
+    return cursor.fetchone()[0]
+  except:
+    # IF PD table does not exist
     return 0
 
 # Reset the database
@@ -113,13 +122,30 @@ def printMatches():
   for i in MatchArray:
     print("Match", i[0], ":", i[1], "vs", i[2])
     
+# Print the teams
+def printTeams():
+  global sqliteConnect, cursor
+  TeamArray = cursor.execute('SELECT * FROM TT')
+  for i in TeamArray:
+    print("Team", i[0], ": ", i[1])
+
+# Print the players
+def printPlayers():
+  global sqliteConnect, cursor
+  PlayerArray = cursor.execute('SELECT ID, Name, TeamID FROM PD').fetchall()
+  for i in PlayerArray:
+    print("Player", i[0], ": ", i[1], " from team ", end="")
+    team = cursor.execute('SELECT Teams FROM TT WHERE ID = ?', (i[2],)).fetchone()
+    print(team[0])
+    
+    
 # Tell if the match details are generated
 def isGenerated(matchID):
   global sqliteConnect, cursor
   return cursor.execute('SELECT DetailsGenerated FROM MD WHERE ID = ?', (matchID,)).fetchone()[0]
 
 # Get the match details
-def getDetails(matchID):
+def getmatchDetails(matchID):
   global sqliteConnect, cursor
   md = cursor.execute('SELECT * FROM MD WHERE ID = ?', (matchID,)).fetchone()
   print("Match", md[0], ":", md[1], "vs", md[2])
@@ -147,6 +173,22 @@ def getDetails(matchID):
     print("Balls: ", MDArr[i][2], end="\t")
     print("Wickets: ", MDArr[i][3], end="\t")
     print("Balls Bowled: ", MDArr[i][4])
+    
+def getPlayerDetails(playerID):
+  global sqliteConnect, cursor
+  pd = cursor.execute('SELECT * FROM PD WHERE ID = ?', (playerID,)).fetchone()
+  print("Player Name: ", pd[1])
+  print("Player Age: ", pd[2])
+  if (pd[3] == 1): print("Right-Handed")
+  else: print("Left-Handed")
+  print("Team: ", pd[4])
+  print("Player Statistics:")
+  print("Matches Played: ", pd[5])
+  print("Runs Scored: ", pd[6])
+  if (pd[7] != 0): print("Strike Rate: ", pd[6]*100/pd[7])
+  else: print("Strike Rate: 0")
+  print("Wickets Taken: ", pd[9])
+  
   
 # Generate the match details
 def generateDetails(matchID):
@@ -345,25 +387,16 @@ def generateDetails(matchID):
     tBbbArr[10] += teamAballs - tempsum
   # Store the data in the MD table
   for i in range(11):
+    cursor.execute(f'UPDATE PD SET MatchesPlayed = MatchesPlayed + 1, RunsScored = RunsScored + {tArsArr[i]}, BallsFaced = BallsFaced + {tAbfArr[i]}, WicketsTaken = WicketsTaken + {tAwtArr[i]}, BallsBowled = BallsBowled + {tAbbArr[i]} WHERE ID = {teamA[i][0]}')
     cursor.execute(f'INSERT INTO MD{matchID} VALUES(?, ?, ?, ?, ?)', (teamA[i][0], tArsArr[i], tAbfArr[i], tAwtArr[i], tAbbArr[i]))
   for i in range(11):
+    cursor.execute(f'UPDATE PD SET MatchesPlayed = MatchesPlayed + 1, RunsScored = RunsScored + {tBrsArr[i]}, BallsFaced = BallsFaced + {tBbfArr[i]}, WicketsTaken = WicketsTaken + {tBwtArr[i]}, BallsBowled = BallsBowled + {tBbbArr[i]} WHERE ID = {teamB[i][0]}')
     cursor.execute(f'INSERT INTO MD{matchID} VALUES(?, ?, ?, ?, ?)', (teamB[i][0], tBrsArr[i], tBbfArr[i], tBwtArr[i], tBbbArr[i]))
   sqliteConnect.commit()
   
-# DEBUG
-def printTeams():
-  global sqliteConnect, cursor
-  TeamsArray = cursor.execute('SELECT * FROM TT')
-  #TeamsArray = cursor.fetchall()
-  for i in TeamsArray:
-    print(i)
-  PlayersArray = cursor.execute('SELECT * FROM PD')
-  for i in PlayersArray:
-    print(i)
-  for i in range(1, numTeams() + 1):
-    TeamArray = cursor.execute(f'SELECT * FROM TD{i}')
-    for j in TeamArray:
-      print(j)
+def closeConn():
+  sqliteConnect.close()
+  exit()
     
 if __name__ == '__main__':
   init()
@@ -376,18 +409,42 @@ if __name__ == '__main__':
   if (numMatches() == 0):
     generateMatches()
   while (True) :
-    print("Matches:")
-    printMatches()
-    choice = int(input('Enter match number to view details (Enter 0 to exit):'))
-    if (choice == 0): exit()
-    if (choice > numMatches() or choice < 0):
-      print('Invalid match number.')
-    if (isGenerated(choice)):
-      print('Details already generated.')
-      getDetails(choice)
+    caseChoice = int(input('Enter 1 to view teams, 2 to view matches, 3 to view player details, 0 to exit: '))
+    if (caseChoice == 0): closeConn()
+    elif (caseChoice == 1):
+      print("Teams:")
+      printTeams()
+      choice = int(input('Enter team ID to view details (Enter 0 to go back):'))
+      if (choice == 0): continue
+      if (choice > numTeams() or choice < 0):
+        print('Invalid team ID.')
+        continue
+      
+    elif (caseChoice == 2):
+      print("Matches:")
+      printMatches()
+      choice = int(input('Enter match number to view details (Enter 0 to go back):'))
+      if (choice == 0): continue
+      if (choice > numMatches() or choice < 0):
+        print('Invalid match number.')
+        continue
+      if (isGenerated(choice)):
+        print('Details already generated.')
+        getmatchDetails(choice)
+      else:
+        genchoice = input("Do you want to generate details? (y/n):")
+        if (genchoice == 'y' or genchoice == 'Y'):
+          generateDetails(choice)
+          print('Details generated.')
+          getmatchDetails(choice)
+    elif (caseChoice == 3):
+      print("Players:")
+      printPlayers()
+      choice = int(input('Enter player ID to view details (Enter 0 to to go back):'))
+      if (choice == 0): continue
+      if (choice > numPlayers() or choice < 0):
+        print('Invalid player ID.')
+        continue
+      getPlayerDetails(choice)
     else:
-      genchoice = input("Do you want to generate details? (y/n):")
-      if (genchoice == 'y' or genchoice == 'Y'):
-        generateDetails(choice)
-        print('Details generated.')
-        getDetails(choice)
+      print("Invalid choice.")
