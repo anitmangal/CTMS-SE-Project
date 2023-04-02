@@ -1,5 +1,6 @@
 import sqlite3
 import random
+import sys
 from math import ceil, floor
 
 # Initialize database
@@ -9,7 +10,7 @@ def init():
     sqliteConnect = sqlite3.connect(r'database.db')
   except:
     print('Could not connect to database.')
-    exit()
+    sys.exit(0)
   cursor = sqliteConnect.cursor()
   cursor.execute('CREATE TABLE IF NOT EXISTS TT(ID INTEGER PRIMARY KEY, Teams TEXT, MatchesPlayed INTEGER DEFAULT 0, MatchesWon INTEGER DEFAULT 0, HighestRunScorer INT DEFAULT 0, HighestWicketTaker INT DEFAULT 0, Last5Matches TEXT DEFAULT "NA")') # Tournament Teams Table
   cursor.execute('CREATE TABLE IF NOT EXISTS MD(ID INTEGER PRIMARY KEY, TeamA INT NOT NULL, TeamB INT NOT NULL, DetailsGenerated BOOLEAN NOT NULL DEFAULT 0, Result INT, BatFirst BOOLEAN, TeamARuns INT, TeamAWickets INT, TeamABalls INT, TeamBRuns INT, TeamBWickets INT, TeamBBalls INT, FOREIGN KEY(TeamA) REFERENCES TT(ID), FOREIGN KEY(TeamB) REFERENCES TT(ID))') # Match Details Table
@@ -501,7 +502,7 @@ def generateDetails(matchID):
   
 def closeConn():
   sqliteConnect.close()
-  exit()
+  sys.exit(0)
     
 if __name__ == '__main__':
   init()
