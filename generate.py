@@ -11,7 +11,7 @@ def init():
     print('Could not connect to database.')
     exit()
   cursor = sqliteConnect.cursor()
-  cursor.execute('CREATE TABLE IF NOT EXISTS TT(ID INTEGER PRIMARY KEY, Teams TEXT, MatchesPlayed INTEGER DEFAULT 0, MatchesWon INTEGER DEFAULT 0, HighestRunScorer INTEGER DEFAULT 0, HighestWicketTaker INTEGER DEFAULT 0, Last5Matches DEFAULT "NA")') # Tournament Teams Table
+  cursor.execute('CREATE TABLE IF NOT EXISTS TT(ID INTEGER PRIMARY KEY, Teams TEXT, MatchesPlayed INTEGER DEFAULT 0, MatchesWon INTEGER DEFAULT 0, HighestRunScorer INT DEFAULT 0, HighestWicketTaker INT DEFAULT 0, Last5Matches DEFAULT "NA")') # Tournament Teams Table
   cursor.execute('CREATE TABLE IF NOT EXISTS MD(ID INTEGER PRIMARY KEY, TeamA INT NOT NULL, TeamB INT NOT NULL, DetailsGenerated BOOLEAN NOT NULL DEFAULT 0, Result INT, BatFirst BOOLEAN, TeamARuns INT, TeamAWickets INT, TeamABalls INT, TeamBRuns INT, TeamBWickets INT, TeamBBalls INT, FOREIGN KEY(TeamA) REFERENCES TT(ID), FOREIGN KEY(TeamB) REFERENCES TT(ID))') # Match Details Table
   cursor.execute('CREATE TABLE IF NOT EXISTS PD(ID INTEGER PRIMARY KEY, Name TEXT, Age INT, Hand BOOLEAN, TeamID NOT NULL, MatchesPlayed INTEGER DEFAULT 0, RunsScored INTEGER DEFAULT 0, BallsFaced INTEGER DEFAULT 0, BallsBowled INTEGER DEFAULT 0, WicketsTaken INTEGER DEFAULT 0, FOREIGN KEY(TeamID) REFERENCES TT(ID))') # Player Details Table
   sqliteConnect.commit()
@@ -46,7 +46,7 @@ def numPlayers():
     return 0
 
 # Reset the database
-def reset():
+def resetDB():
   global sqliteConnect, cursor
   numT = numTeams()
   numM = numMatches()
@@ -118,7 +118,7 @@ def generateMatches():
 # Print the fixtures
 def printMatches():
   global sqliteConnect, cursor
-  MatchArray = cursor.execute('SELECT * FROM MD')
+  MatchArray = cursor.execute('SELECT MD.ID, T1.Teams, T2.Teams FROM MD LEFT JOIN TT T1 ON MD.TeamA = T1.ID LEFT JOIN TT T2 ON MD.TeamB = T2.ID')
   for i in MatchArray:
     print("Match", i[0], ":", i[1], "vs", i[2])
     
@@ -144,14 +144,48 @@ def isGenerated(matchID):
   global sqliteConnect, cursor
   return cursor.execute('SELECT DetailsGenerated FROM MD WHERE ID = ?', (matchID,)).fetchone()[0]
 
-# Get the match details
-def getmatchDetails(matchID):
+def getTeamDetails(teamID):
   global sqliteConnect, cursor
-  md = cursor.execute('SELECT * FROM MD WHERE ID = ?', (matchID,)).fetchone()
+  td = cursor.execute('SELECT * FROM TT WHERE ID = ?', (teamID,)).fetchone()
+  print("Team", td[1])
+  print("Players:")
+  playerArray = cursor.execute(f'SELECT PD.ID, PD.Name, TD{teamID}.isCaptain, TD{teamID}.isBatsman, TD{teamID}.isBowler, TD{teamID}.isWK FROM TD{teamID} LEFT JOIN PD ON PD.ID = TD{teamID}.PlayerID WHERE PD.TeamID = ?', (teamID,)).fetchall()
+  for (i, j, k, l, m, n) in playerArray:
+    print("Player", i, ":", j, end="")
+    if k:
+      print(" (Captain)", end="")
+    if l:
+      print(" (Batsman)", end="")
+    if m:
+      print(" (Bowler)", end="")
+    if n:
+      print(" (Wicketkeeper)", end="")
+    print()
+  print("Statistics:")
+  print("Matches Played:", td[2])
+  print("Matches Won:", td[3])
+  highScore = cursor.execute('SELECT PD1.Name, PD1.RunsScored, PD2.Name, PD2.WicketsTaken FROM TT LEFT JOIN PD PD1 ON PD1.ID = TT.HighestRunScorer LEFT JOIN PD PD2 ON PD2.ID = TT.HighestWicketTaker WHERE TT.ID = ?', (teamID,)).fetchone()
+  if (highScore == None):
+    print("Highest Run Scorer: None")
+    print("Highest Wicket Taker: None")
+  else:
+    print("Highest Run Scorer:", highScore[0], "(", highScore[1],"runs )")
+    print("Highest Wicket Taker:", highScore[2], "(", highScore[3],"wickets )")
+  print("Results in last 5 matches:", end=" ")
+  for i in range(5): 
+    if (len(td[6]) > i):
+      print(td[6][i], end="")
+  print()
+  
+  
+# Get the match details
+def getMatchDetails(matchID):
+  global sqliteConnect, cursor
+  md = cursor.execute('SELECT MD.ID, T1.Teams, T2.Teams, MD.DetailsGenerated, MD.Result, MD.BatFirst, MD.TeamARuns, MD.TeamAWickets, MD.TeamABalls, MD.TeamBRuns, MD.TeamBWickets, MD.TeamBBalls FROM MD LEFT JOIN TT T1 ON T1.ID=MD.TeamA LEFT JOIN TT T2 ON T2.ID=MD.TeamB WHERE MD.ID = ?', (matchID,)).fetchone()
   print("Match", md[0], ":", md[1], "vs", md[2])
   print("Result:")
   if (md[4] == 0):
-    print("Tie")
+    print("Draw")
   elif (md[4] == 1):
     print("Team", md[1], " wins")
   else:
@@ -163,7 +197,7 @@ def getmatchDetails(matchID):
   print("Team", md[1], ":", md[6], "/", md[7], "(", floor(md[8]/6) + float(md[8]%6)/10, "overs )")
   print("Team", md[2], ":", md[9], "/", md[10], "(", floor(md[11]/6) + float(md[11]%6)/10, "overs )")
   print("Match Scorecard:")
-  MDArr = cursor.execute(f'SELECT * FROM MD{matchID}').fetchall()
+  MDArr = cursor.execute(f'SELECT PD.Name, MD{matchID}.RunsScored, MD{matchID}.BallsFaced, MD{matchID}.WicketsTaken, MD{matchID}.BallsBowled FROM MD{matchID} LEFT JOIN PD ON PD.ID=MD{matchID}.PlayerID').fetchall()
   for i in range(22):
     if (i == 0): print("Team", md[1], ":")
     elif (i == 11): print("Team", md[2], ":")
@@ -189,7 +223,23 @@ def getPlayerDetails(playerID):
   else: print("Strike Rate: 0")
   print("Wickets Taken: ", pd[9])
   
-  
+def updateHighScores(teamID):
+  global sqliteConnect, cursor
+  highScore = cursor.execute('SELECT PD1.RunsScored, PD2.WicketsTaken FROM TT LEFT JOIN PD PD1 ON PD1.ID = TT.HighestRunScorer LEFT JOIN PD PD2 ON PD2.ID = TT.HighestWicketTaker WHERE TT.ID = ?', (teamID,)).fetchone()
+  teamHighRuns = cursor.execute('SELECT PD.ID, PD.RunsScored FROM TT LEFT JOIN PD ON PD.TeamID = TT.ID WHERE TT.ID = ? ORDER BY PD.RunsScored DESC LIMIT 1', (teamID,)).fetchone()
+  teamHighWickets = cursor.execute('SELECT PD.ID, PD.WicketsTaken FROM TT LEFT JOIN PD ON PD.TeamID = TT.ID WHERE TT.ID = ? ORDER BY PD.WicketsTaken DESC LIMIT 1', (teamID,)).fetchone()
+  print("HIGH", highScore, teamHighRuns, teamHighWickets)
+  if (highScore[0] == None):
+    cursor.execute('UPDATE TT SET HighestRunScorer = ? WHERE ID = ?', (teamHighRuns[0], teamID))
+    cursor.execute('UPDATE TT SET HighestWicketTaker = ? WHERE ID = ?', (teamHighWickets[0], teamID))
+    sqliteConnect.commit()
+    return
+  if (teamHighRuns[1] > highScore[0]):
+    cursor.execute('UPDATE TT SET HighestRunScorer = ? WHERE ID = ?', (teamHighRuns[0], teamID))
+  if (teamHighWickets[1] > highScore[1]):
+    cursor.execute('UPDATE TT SET HighestWicketTaker = ? WHERE ID = ?', (teamHighWickets[0], teamID))
+  sqliteConnect.commit()
+
 # Generate the match details
 def generateDetails(matchID):
   global sqliteConnect, cursor
@@ -254,6 +304,48 @@ def generateDetails(matchID):
       winner = 0
       teamAballs = random.randint(round(teamAruns/6), 120)
   cursor.execute('UPDATE MD SET DetailsGenerated = 1, BatFirst = ?, TeamARuns = ?, TeamABalls = ?, TeamAWickets = ?, TeamBRuns = ?, TeamBBalls = ?, TeamBWickets = ?, Result = ? WHERE ID = ?', (batFirst, teamAruns, teamAballs, teamAwickets, teamBruns, teamBballs, teamBwickets, winner, matchID))
+  # Get the teams playing the match
+  cursor.execute(f'SELECT TeamA, TeamB FROM MD WHERE ID = {matchID}')
+  matchteams = cursor.fetchall()
+  tAid = matchteams[0][0]
+  tBid = matchteams[0][1]
+  cursor.execute('UPDATE TT SET MatchesPlayed = MatchesPlayed + 1 WHERE ID = ?', (tAid,))
+  cursor.execute('UPDATE TT SET MatchesPlayed = MatchesPlayed + 1 WHERE ID = ?', (tBid,))
+  if (winner == 1):
+    cursor.execute('UPDATE TT SET MatchesWon = MatchesWon + 1 WHERE ID = ?', (tAid,))
+    tAlast5 = cursor.execute('SELECT Last5Matches FROM TT WHERE ID = ?', (tAid,)).fetchone()[0]
+    if (tAlast5 == "NA"): tAlast5 = ""
+    if (len(tAlast5) == 5): tAlast5 = tAlast5[1:]+'W'
+    else: tAlast5 += 'W'
+    cursor.execute('UPDATE TT SET Last5Matches = ? WHERE ID = ?', (tAlast5, tAid))
+    tBlast5 = cursor.execute('SELECT Last5Matches FROM TT WHERE ID = ?', (tBid,)).fetchone()[0]
+    if (tBlast5 == "NA"): tBlast5 = ""
+    if (len(tBlast5) == 5): tBlast5 = tBlast5[1:]+'L'
+    else: tBlast5 += 'L'
+    cursor.execute('UPDATE TT SET Last5Matches = ? WHERE ID = ?', (tBlast5, tBid))
+  elif (winner == 2):
+    cursor.execute('UPDATE TT SET MatchesWon = MatchesWon + 1 WHERE ID = ?', (tBid,))
+    tAlast5 = cursor.execute('SELECT Last5Matches FROM TT WHERE ID = ?', (tAid,)).fetchone()[0]
+    if (tAlast5 == "NA"): tAlast5 = ""
+    if (len(tAlast5) == 5): tAlast5 = tAlast5[1:]+'L'
+    else: tAlast5 += 'L'
+    cursor.execute('UPDATE TT SET Last5Matches = ? WHERE ID = ?', (tAlast5, tAid))
+    tBlast5 = cursor.execute('SELECT Last5Matches FROM TT WHERE ID = ?', (tBid,)).fetchone()[0]
+    if (tBlast5 == "NA"): tBlast5 = ""
+    if (len(tBlast5) == 5): tBlast5 = tBlast5[1:]+'W'
+    else: tBlast5 += 'W'
+    cursor.execute('UPDATE TT SET Last5Matches = ? WHERE ID = ?', (tBlast5, tBid))
+  else:
+    tAlast5 = cursor.execute('SELECT Last5Matches FROM TT WHERE ID = ?', (tAid,)).fetchone()[0]
+    if (tAlast5 == "NA"): tAlast5 = ""
+    if (len(tAlast5) == 5): tAlast5 = tAlast5[1:]+'D'
+    else: tAlast5 += 'D'
+    cursor.execute('UPDATE TT SET Last5Matches = ? WHERE ID = ?', (tAlast5, tAid))
+    tBlast5 = cursor.execute('SELECT Last5Matches FROM TT WHERE ID = ?', (tBid,)).fetchone()[0]
+    if (tBlast5 == "NA"): tBlast5 = ""
+    if (len(tBlast5) == 5): tBlast5 = tBlast5[1:]+'D'
+    else: tBlast5 += 'D'
+    cursor.execute('UPDATE TT SET Last5Matches = ? WHERE ID = ?', (tBlast5, tBid))
   # Create the table for the match scorecard
   cursor.execute(f'CREATE TABLE MD{matchID} (PlayerID INTEGER PRIMARY KEY, RunsScored INTEGER, BallsFaced INTEGER, WicketsTaken INTEGER, BallsBowled INTEGER, FOREIGN KEY(PlayerID) REFERENCES PD(ID))')
   sqliteConnect.commit()
@@ -321,11 +413,6 @@ def generateDetails(matchID):
   elif (tempsum > teamBballs):
     max_val = max(tBbfArr)
     max_ind = tBbfArr.index(max_val)
-  # Get the teams playing the match
-  cursor.execute(f'SELECT TeamA, TeamB FROM MD WHERE ID = {matchID}')
-  matchteams = cursor.fetchall()
-  tAid = matchteams[0][0]
-  tBid = matchteams[0][1]
   # Get if player is a bowler or not
   cursor.execute(f'SELECT PlayerID, isBowler FROM TD{tAid}')
   teamA = cursor.fetchall()
@@ -392,6 +479,8 @@ def generateDetails(matchID):
   for i in range(11):
     cursor.execute(f'UPDATE PD SET MatchesPlayed = MatchesPlayed + 1, RunsScored = RunsScored + {tBrsArr[i]}, BallsFaced = BallsFaced + {tBbfArr[i]}, WicketsTaken = WicketsTaken + {tBwtArr[i]}, BallsBowled = BallsBowled + {tBbbArr[i]} WHERE ID = {teamB[i][0]}')
     cursor.execute(f'INSERT INTO MD{matchID} VALUES(?, ?, ?, ?, ?)', (teamB[i][0], tBrsArr[i], tBbfArr[i], tBwtArr[i], tBbbArr[i]))
+  updateHighScores(tAid)
+  updateHighScores(tBid)
   sqliteConnect.commit()
   
 def closeConn():
@@ -402,7 +491,7 @@ if __name__ == '__main__':
   init()
   choice = input('Do you want to reset? (y/n): ')
   if (choice == 'y' or choice == 'Y'):
-    reset()
+    resetDB()
   if (numTeams() == 0):
     n = int(input('Enter number of teams: '))
     generateTeams(n)
@@ -419,7 +508,7 @@ if __name__ == '__main__':
       if (choice > numTeams() or choice < 0):
         print('Invalid team ID.')
         continue
-      
+      getTeamDetails(choice)
     elif (caseChoice == 2):
       print("Matches:")
       printMatches()
@@ -430,13 +519,13 @@ if __name__ == '__main__':
         continue
       if (isGenerated(choice)):
         print('Details already generated.')
-        getmatchDetails(choice)
+        getMatchDetails(choice)
       else:
         genchoice = input("Do you want to generate details? (y/n):")
         if (genchoice == 'y' or genchoice == 'Y'):
           generateDetails(choice)
           print('Details generated.')
-          getmatchDetails(choice)
+          getMatchDetails(choice)
     elif (caseChoice == 3):
       print("Players:")
       printPlayers()
