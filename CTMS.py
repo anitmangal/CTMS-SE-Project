@@ -511,6 +511,9 @@ if __name__ == '__main__':
     resetDB()
   if (numTeams() == 0):
     n = int(input('Enter number of teams: '))
+    while(n<=1 and n>12):
+      print('Number of teams cannot be less than 2 or more than 12')
+      n = int(input('Enter number of teams: '))
     generateTeams(n)
   if (numMatches() == 0):
     generateMatches()
