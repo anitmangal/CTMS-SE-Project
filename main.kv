@@ -1,0 +1,1549 @@
+WindowManager:
+    HomeWindow:
+    AboutUsWindow:
+    ResetWindow:
+    MenuWindow:
+    ViewTeamsWindow:
+    TeamDetailsWindow1:
+    TeamDetailsWindow2:
+    TeamDetailsWindow3:
+    TeamDetailsWindow4:
+    TeamDetailsWindow5:
+    TeamDetailsWindow6:
+    TeamDetailsWindow7:
+    TeamDetailsWindow8:
+    TeamDetailsWindow9:
+    TeamDetailsWindow10:
+    ViewPlayerDetailsWindow:
+    ViewMatchesWindow:
+    ViewTournamentStatistics:
+
+
+<HomeWindow>
+    name: "homew"
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/cground.jpg'
+        Label:
+            id: display_project
+            text: "  [font=assets/fonts/Merriweather-Black]Cricket Tournament \n  Management System[/font]"
+            text_size: self.size
+            halign: 'left'
+            valign: 'middle'
+            
+            background_color: (126/255.0, 198/255.5, 142/255.0, 0.45)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+                    #source: 'assets/images/cground.jpg'
+
+            #text properties:
+            markup: True
+            font_size: 50
+            color: (1, 1, 1, 1)
+            bold: True
+            outline_color: (0, 0, 0)
+            outline_width: 0
+
+        RoundedButton:
+            id: button_enter
+            text: "Enter"
+            font_size: 30
+            bold: True
+            size_hint: (1, 0.15)
+            pos_hint: {'center_x': 0.5}
+            on_release:
+                app.root.current = "resetw"
+                root.manager.transition.direction = "left"
+            #background_normal: ''
+            #background_color: (209/255.0, 217/255.0, 69/255.0, 0.75)
+
+        MenuButton:
+            id: aboutus
+            text: "About us c:"
+            font_size: 25
+            bold: True
+            size_hint: (1, 0.5)
+            pos_hint: {'center_x': 0.5}            
+            on_release:
+                #root.setnames()
+                app.root.current = "aboutusw"
+                root.manager.transition.direction = "left"
+<AboutUsWindow>
+    name: "aboutusw"
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/englishcri.jpg'
+        Label:
+
+            text: "[font=assets/fonts/times]We are a team of three dedicated to creating a simple and efficient \nCricket Tournament Management System that stores and manages \ninformation related to players, teams, matches, \nand statistics. Our system allows for random generation of player \nand team details, generation of match schedules, \nand the ability to view player and team statistics, as well as \nmatch scorecards. Our system is designed to handle a round-robin \ntournament system with ease. This is a term-project for \nSoftware Engineering Lab 2023 made by \nAnit Mangal, Ratan Junior and Gorantla Thoyajakshi.[/font]"
+            halign: 'center'
+            valign: 'middle'
+            background_color: (178/255.0, 21/255.0, 18/255.0 , 0.45)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            markup: True
+            font_size: 27
+            color: (1, 1, 1, 1)
+            bold: True
+
+        #go home
+        RoundedButton:
+            id: button_home2
+            text: "go back home"
+            font_size: 25
+            bold: True
+            size_hint: (0.5, 0.15)
+            pos_hint: {'center_x': 0.5}            
+            on_release:
+                app.root.current = "homew"
+                root.manager.transition.direction = "right"
+
+<ResetWindow>
+    name: "resetw"
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/cground.jpg'
+        Label:
+            text: "  [font=assets/fonts/Merriweather-Black]Do you want to reset the database?[/font]"
+            font_size: 30
+            background_color: (178/255.0, 21/255.0, 18/255.0 , 0.45)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+
+            markup: True
+            font_size: 25
+            color: (1, 1, 1, 1)
+            bold: True
+        YesNoButton:
+            text: "Yes"
+            font_size: 30
+            bold: True
+            size_hint: (1, 0.30)
+            pos_hint: {'center_x': 0.5}
+            font_size: 24
+            on_release:
+                root.press_yes()
+                app.root.current = "menuw"
+                root.manager.transition.direction = "left"
+        YesNoButton:
+            text: "No"
+            font_size: 30
+            bold: True
+            size_hint: (1, 0.30)
+            pos_hint: {'center_x': 0.5}
+            font_size: 24
+            on_release:
+                app.root.current = "menuw"
+                root.manager.transition.direction = "left"
+
+<MenuWindow>
+    name: "menuw"
+    BoxLayout:
+        id: menu_box
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/cground.jpg'
+        
+        #view teams
+        MenuButton:
+            id: viewt
+            text: "View Teams"
+            font_size: 25
+            bold: True
+            size_hint: (0.5, 0.15)
+            pos_hint: {'center_x': 0.5}            
+            on_release:
+                #root.setnames()
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "left"
+
+        #view matches
+        MenuButton:
+            id: viewm
+            text: "View Matches"
+            font_size: 25
+            bold: True
+            size_hint: (0.5, 0.15)
+            pos_hint: {'center_x': 0.5}            
+            on_release:
+                root.genMatches()
+                app.root.current = "vmatchesw"
+                root.manager.transition.direction = "left"
+        
+        #view player details
+        MenuButton:
+            id: viewpd
+            text: "View Player Details"
+            font_size: 25
+            bold: True
+            size_hint: (0.5, 0.15)
+            pos_hint: {'center_x': 0.5}            
+            on_release:
+                app.root.current = "vplayerdw"
+                root.manager.transition.direction = "left"
+
+        #view tournament details
+        MenuButton:
+            id: viewtod
+            text: "View Tournament Statistics"
+            font_size: 25
+            bold: True
+            size_hint: (0.5, 0.15)
+            pos_hint: {'center_x': 0.5}            
+            on_release:
+                app.root.current = "vtournaments"
+                root.manager.transition.direction = "left"
+
+        #go home
+        RoundedButton:
+            id: button_home2
+            text: "go back home"
+            font_size: 25
+            bold: True
+            size_hint: (0.5, 0.15)
+            pos_hint: {'center_x': 0.5}            
+            on_release:
+                app.root.current = "homew"
+                root.manager.transition.direction = "right"
+
+<ViewTeamsWindow>
+    name: "vteamsw"
+    BoxLayout:
+        id: superbox_vt
+        orientation: "horizontal"
+        size: root.width, root.height
+        padding:40
+        spacing:0
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/stadium.jpg'
+        
+        BoxLayout:
+            id: buttonboxlayout
+            orientation: "vertical"
+            size: root.width, root.height
+            padding:50
+            spacing:10
+            background_color: (126/255.0, 198/255.5, 142/255.0, 0.2)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Button:
+                id: menufromTeamview
+                text: "[b][font=assets/fonts/times]Back to menu[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (209/255.0, 217/255.0, 69/255.0, 1)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [18]
+                on_release:
+                    app.root.current = "menuw"
+                    root.manager.transition.direction = "right" 
+            Button:
+                id: view_team1
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 1[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team1dw"
+                    root.manager.transition.direction = "left" 
+            Button:
+                id: view_team2
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 2[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team2dw"
+                    root.manager.transition.direction = "left"  
+            Button:
+                id: view_team3
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 3[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team3dw"
+                    root.manager.transition.direction = "left"
+            Button:
+                id: view_team4
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 4[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team4dw"
+                    root.manager.transition.direction = "left"
+            Button:
+                id: view_team5
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 5[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team5dw"
+                    root.manager.transition.direction = "left"
+            Button:
+                id: view_team6
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 6[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team6dw"
+                    root.manager.transition.direction = "left"
+            Button:
+                id: view_team7
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 7[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team7dw"
+                    root.manager.transition.direction = "left"
+            Button:
+                id: view_team8
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 8[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team8dw"
+                    root.manager.transition.direction = "left"
+            Button:
+                id: view_team9
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 9[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team9dw"
+                    root.manager.transition.direction = "left"
+            Button:
+                id: view_team10
+                text: "[b][font=assets/fonts/Merriweather-Black]Team 10[/font][/b]"
+                markup: True
+                font_size: 30
+                color: (0, 0, 0, 1)
+                size_hint: (1, 0.3)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before: 
+                    Color:
+                        rgba: (204/255.0, 54/255.0, 0/255.0, 0.5)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    app.root.current = "team10dw"
+                    root.manager.transition.direction = "left"
+        
+<TeamDetailsWindow1>
+    name: "team1dw"
+    BoxLayout:
+        name: "superbox_t1"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            id: teamview_fromt1v
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            id: viewt1stat
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats1()
+        Button:
+            id: viewt1pd
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD1()
+                
+<TeamDetailsWindow2>
+    name: "team2dw"
+    BoxLayout:
+        name: "superbox_t2"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            id: teamview_fromt2v
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            id: viewt2stat
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            id: viewt2pd
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD()
+<TeamDetailsWindow3>
+    name: "team3dw"
+    BoxLayout:
+        name: "superbox_t3"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            id: teamview_fromt3v
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            id: viewt3stat
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            id: viewt3pd
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD()
+<TeamDetailsWindow4>
+    name: "team4dw"
+    BoxLayout:
+        name: "superbox_t4"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            id: teamview_fromt4v
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            id: viewt4stat
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            id: viewt4pd
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD()
+<TeamDetailsWindow5>
+    name: "team5dw"
+    BoxLayout:
+        name: "superbox_t5"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            id: teamview_fromt5v
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            id: viewt5stat
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            id: viewt5pd
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD()
+<TeamDetailsWindow6>
+    name: "team6dw"
+    BoxLayout:
+        name: "superbox_t6"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD()
+
+<TeamDetailsWindow7>
+    name: "team7dw"
+    BoxLayout:
+        name: "superbox_t7"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD()
+
+<TeamDetailsWindow7>
+    name: "team7dw"
+    BoxLayout:
+        name: "superbox_t7"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD()
+
+<TeamDetailsWindow8>
+    name: "team8dw"
+    BoxLayout:
+        name: "superbox_t8"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD()
+
+<TeamDetailsWindow9>
+    name: "team9dw"
+    BoxLayout:
+        name: "superbox_t9"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD() 
+
+<TeamDetailsWindow10>
+    name: "team10dw"
+    BoxLayout:
+        name: "superbox_t10"
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Button:
+            text: "[b][font=assets/fonts/times]back to viewing teams[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (128/255.0, 31/255.0, 82/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "vteamsw"
+                root.manager.transition.direction = "right"        
+        Button:
+            text: "[b][font=assets/fonts/times]View Statistics[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_stats()
+        Button:
+            text: "[b][font=assets/fonts/times]View player details[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (198/255.0, 26/255.0, 44/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_playerD()
+<ViewPlayerDetailsWindow>
+    name: "vplayerdw"
+    BoxLayout:
+        id: menu_box
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/englishcri.jpg'
+        Label:
+            text: "[font=assets/fonts/Merriweather-Black]Enter the player ID \nto view details[/font]"
+            font_size: 30
+            markup: True
+            background_color: (178/255.0, 21/255.0, 18/255.0 , 0.45)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+        TextInput:
+            id: input_id
+            text: '10'
+            multiline: False
+            size_hint: (0.4, 0.2)
+            pos_hint: {'center_x': 0.5}
+            font_size: 20
+
+        MenuButton:
+            text: "submit"
+            font_size: 30
+            bold: True
+            size_hint: (1, 0.30)
+            pos_hint: {'center_x': 0.5}
+            font_size: 24
+            on_release:
+                root.select_playerID()
+        MenuButton:
+            text: "view players"
+            font_size: 30
+            bold: True
+            size_hint: (1, 0.30)
+            pos_hint: {'center_x': 0.5}
+            font_size: 24
+            on_release:
+                root.view_playerID()
+        MenuButton:
+            text: "back to menu"
+            font_size: 30
+            bold: True
+            size_hint: (1, 0.30)
+            pos_hint: {'center_x': 0.5}
+            font_size: 24
+            on_release:
+                app.root.current = "menuw"
+                root.manager.transition.direction = "right"
+
+<ViewMatchesWindow>:
+    name: "vmatchesw"
+    BoxLayout:
+        id: menu_box
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/ground.jpg'
+        Label:
+            text: "[font=assets/fonts/Merriweather-Black]Enter the match ID \nto generate and show details[/font]"
+            font_size: 30
+            markup: True
+            background_color: (178/255.0, 21/255.0, 18/255.0 , 0.45)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+        TextInput:
+            id: input_matchid
+            text: '1'
+            multiline: False
+            size_hint: (0.4, 0.4)
+            pos_hint: {'center_x': 0.5}
+            font_size: 20
+        BoxLayout:
+            id: menu_box
+            orientation: "horizontal"
+            size: root.width, root.height
+            padding:30
+            spacing:20
+            background_color: (126/255.0, 198/255.5, 142/255.0, 0.45)
+
+            Button:
+                text: "results of the match"
+                font_size: 30
+                bold: True
+                size_hint: (1, 0.60)
+                pos_hint: {'center_x': 0.5}
+                font_size: 24
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before:
+                    Color:
+                        rgba: (143/255.0, 107/255.0, 30/255.0, 0.7)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    root.view_matchResult()
+            Button:
+                text: "scorecard of the match"
+                font_size: 30
+                bold: True
+                size_hint: (1, 0.60)
+                pos_hint: {'center_x': 0.5}
+                font_size: 24
+                background_color: (0,0,0,0)
+                background_normal: ''
+                canvas.before:
+                    Color:
+                        rgba: (143/255.0, 107/255.0, 30/255.0, 0.7)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+                on_release:
+                    root.view_matchScorecard()
+
+        MenuButton:
+            text: "view matches"
+            font_size: 30
+            bold: True
+            size_hint: (1, 0.5)
+            pos_hint: {'center_x': 0.5}
+            font_size: 24
+            on_release:
+                root.view_matchD()
+        MenuButton:
+            text: "back to menu"
+            font_size: 30
+            bold: True
+            size_hint: (1, 0.5)
+            pos_hint: {'center_x': 0.5}
+            font_size: 24
+            on_release:
+                app.root.current = "menuw"
+                root.manager.transition.direction = "right"
+
+<ViewTournamentStatistics>
+    name: "vtournaments"
+    BoxLayout:
+        id: viewts_box
+        orientation: "vertical"
+        size: root.width, root.height
+        padding:50
+        spacing:20
+        background_color: (126/255.0, 198/255.5, 142/255.0, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'assets/images/kindatennis.jpg'
+        Button:
+            id: menu_fromts
+            text: "[b][font=assets/fonts/times]Back to menu[/font][/b]"
+            markup: True
+            font_size: 30
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.3)
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (209/255.0, 217/255.0, 69/255.0, 1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                app.root.current = "menuw"
+                root.manager.transition.direction = "right"        
+        Button:
+            id: top_run
+            text: "[b][font=assets/fonts/times]Top 5 Run Scorers[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (47/255.0, 10/255.0, 83/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_toprun()
+        Button:
+            id: top_wicket
+            text: "[b][font=assets/fonts/times]Top 5 Wicket Takers[/font][/b]"
+            markup: True
+            font_size: 35
+            pos_hint: {'center_x': 0.5}
+            background_color: (0,0,0,0)
+            background_normal: ''
+            canvas.before: 
+                Color:
+                    rgba: (47/255.0, 10/255.0, 83/255.0, 0.5)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18]
+            on_release:
+                root.show_topwicket()
+
+<RoundedButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (209/255.0, 217/255.0, 69/255.0, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [18]
+
+<MenuButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (3/255.0, 29/255.0, 6/255.0, 0.75)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [5]
+
+<YesNoButton@Button>
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (3/255.0, 29/255.0, 6/255.0, 0.75)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+        Line:
+            width: 5
+            rectangle: self.x, self.y, self.width, self.height
+
+
+
+        
+            
+    
