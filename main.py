@@ -158,6 +158,8 @@ class TeamDetailsWindow2(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             ("Player ID", dp(100)),
@@ -198,6 +200,8 @@ class TeamDetailsWindow2(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             (f'Team {td[1]}', dp(100)),
@@ -247,6 +251,8 @@ class TeamDetailsWindow3(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             ("Player ID", dp(100)),
@@ -287,6 +293,8 @@ class TeamDetailsWindow3(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             (f'Team {td[1]}', dp(100)),
@@ -336,6 +344,8 @@ class TeamDetailsWindow4(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             ("Player ID", dp(100)),
@@ -376,6 +386,8 @@ class TeamDetailsWindow4(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             (f'Team {td[1]}', dp(100)),
@@ -425,6 +437,8 @@ class TeamDetailsWindow5(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             ("Player ID", dp(100)),
@@ -465,6 +479,8 @@ class TeamDetailsWindow5(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             (f'Team {td[1]}', dp(100)),
@@ -514,6 +530,8 @@ class TeamDetailsWindow6(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             ("Player ID", dp(100)),
@@ -554,6 +572,8 @@ class TeamDetailsWindow6(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             (f'Team {td[1]}', dp(100)),
@@ -603,6 +623,8 @@ class TeamDetailsWindow7(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             ("Player ID", dp(100)),
@@ -643,6 +665,8 @@ class TeamDetailsWindow7(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             (f'Team {td[1]}', dp(100)),
@@ -692,6 +716,8 @@ class TeamDetailsWindow8(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             ("Player ID", dp(100)),
@@ -732,6 +758,8 @@ class TeamDetailsWindow8(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             (f'Team {td[1]}', dp(100)),
@@ -781,6 +809,8 @@ class TeamDetailsWindow9(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             ("Player ID", dp(100)),
@@ -821,6 +851,8 @@ class TeamDetailsWindow9(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             (f'Team {td[1]}', dp(100)),
@@ -870,6 +902,8 @@ class TeamDetailsWindow10(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             ("Player ID", dp(100)),
@@ -910,6 +944,8 @@ class TeamDetailsWindow10(Screen):
             disabled=False,
             pos_hint={'center_x': 0.5, 'center_y': 0.5},
             padding=100,
+            use_pagination = True,
+            rows_num=11,
             size_hint=(1, 1),
             column_data=[
             (f'Team {td[1]}', dp(100)),
@@ -976,7 +1012,7 @@ class ViewPlayerDetailsWindow(Screen):
     def select_playerID(self):
         playerID = self.ids.input_id.text
         cursor = returncursor()
-        pd = cursor.execute('SELECT * FROM PD WHERE ID = ?', (playerID,)).fetchone()
+        pd = cursor.execute('SELECT PD.ID,PD.Name,PD.Age,PD.Hand,TT.Teams,PD.MatchesPlayed,PD.RunsScored,PD.BallsFaced,PD.BallsBowled,PD.WicketsTaken FROM PD LEFT JOIN TT ON TT.ID=PD.TeamID WHERE PD.ID = ?', (playerID,)).fetchone()
         hand=""
         if(pd[3]==1):
             hand="Right-handed"
@@ -1134,12 +1170,12 @@ class ViewMatchesWindow(Screen):
             rows_num=10,
             pagination_menu_height='240dp',
             column_data=[
-            ('Team', dp(100)),
-            ('Player', dp(100)),
-            ('Runs', dp(100)),
-            ('Balls received', dp(100)),
-            ('Wickets', dp(100)),
-            ('Balls Bowled', dp(100))
+            ('Team', dp(50)),
+            ('Player', dp(50)),
+            ('Runs', dp(50)),
+            ('Balls received', dp(50)),
+            ('Wickets', dp(50)),
+            ('Balls Bowled', dp(50))
             ],
             row_data=match_score_list,
             elevation=2,
@@ -1222,7 +1258,6 @@ class ViewTournamentStatistics(Screen):
     def back_fromwickett(self):
         self.remove_widget(self.topwicket_table)
         self.remove_widget(self.back_button)
-        #App.get_running_app().root.get_screen('menuw').add_widget(self.ids.menu_box)
 
 
 class WindowManager(ScreenManager):
