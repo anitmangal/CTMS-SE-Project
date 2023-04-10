@@ -80,7 +80,7 @@ class TeamDetailsWindow1(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromt1PlayerD())
         self.add_widget(self.playerD1Table)
         self.add_widget(self.back_button)
@@ -125,7 +125,7 @@ class TeamDetailsWindow1(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromt1stats())
         self.add_widget(self.stats1Table)
         self.add_widget(self.back_button)
@@ -169,7 +169,7 @@ class TeamDetailsWindow2(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtPlayerD())
         self.add_widget(self.playerDTable)
         self.add_widget(self.back_button)
@@ -214,7 +214,7 @@ class TeamDetailsWindow2(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtstats())
         self.add_widget(self.statsTable)
         self.add_widget(self.back_button)
@@ -258,7 +258,7 @@ class TeamDetailsWindow3(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtPlayerD())
         self.add_widget(self.playerDTable)
         self.add_widget(self.back_button)
@@ -303,7 +303,7 @@ class TeamDetailsWindow3(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtstats())
         self.add_widget(self.statsTable)
         self.add_widget(self.back_button)
@@ -347,7 +347,7 @@ class TeamDetailsWindow4(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtPlayerD())
         self.add_widget(self.playerDTable)
         self.add_widget(self.back_button)
@@ -392,7 +392,7 @@ class TeamDetailsWindow4(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtstats())
         self.add_widget(self.statsTable)
         self.add_widget(self.back_button)
@@ -436,7 +436,7 @@ class TeamDetailsWindow5(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtPlayerD())
         self.add_widget(self.playerDTable)
         self.add_widget(self.back_button)
@@ -481,7 +481,7 @@ class TeamDetailsWindow5(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtstats())
         self.add_widget(self.statsTable)
         self.add_widget(self.back_button)
@@ -525,7 +525,7 @@ class TeamDetailsWindow6(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtPlayerD())
         self.add_widget(self.playerDTable)
         self.add_widget(self.back_button)
@@ -570,7 +570,7 @@ class TeamDetailsWindow6(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtstats())
         self.add_widget(self.statsTable)
         self.add_widget(self.back_button)
@@ -614,7 +614,7 @@ class TeamDetailsWindow7(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtPlayerD())
         self.add_widget(self.playerDTable)
         self.add_widget(self.back_button)
@@ -659,7 +659,7 @@ class TeamDetailsWindow7(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtstats())
         self.add_widget(self.statsTable)
         self.add_widget(self.back_button)
@@ -703,7 +703,7 @@ class TeamDetailsWindow8(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtPlayerD())
         self.add_widget(self.playerDTable)
         self.add_widget(self.back_button)
@@ -748,7 +748,7 @@ class TeamDetailsWindow8(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtstats())
         self.add_widget(self.statsTable)
         self.add_widget(self.back_button)
@@ -792,7 +792,7 @@ class TeamDetailsWindow9(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtPlayerD())
         self.add_widget(self.playerDTable)
         self.add_widget(self.back_button)
@@ -837,7 +837,7 @@ class TeamDetailsWindow9(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtstats())
         self.add_widget(self.statsTable)
         self.add_widget(self.back_button)
@@ -881,7 +881,7 @@ class TeamDetailsWindow10(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtPlayerD())
         self.add_widget(self.playerDTable)
         self.add_widget(self.back_button)
@@ -926,7 +926,7 @@ class TeamDetailsWindow10(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromtstats())
         self.add_widget(self.statsTable)
         self.add_widget(self.back_button)
@@ -964,7 +964,7 @@ class ViewPlayerDetailsWindow(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromPID())
         self.add_widget(self.PIDTable)
         self.add_widget(self.back_button)
@@ -1009,7 +1009,7 @@ class ViewPlayerDetailsWindow(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromPD())
         self.add_widget(self.PDTable)
         self.add_widget(self.back_button)
@@ -1045,7 +1045,7 @@ class ViewMatchesWindow(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromMD())
         self.add_widget(self.MDTable)
         self.add_widget(self.back_button)
@@ -1099,7 +1099,7 @@ class ViewMatchesWindow(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromPD())
         self.add_widget(self.PDTable)
         self.add_widget(self.back_button)
@@ -1146,7 +1146,7 @@ class ViewMatchesWindow(Screen):
             background_color_header="#C1D334",
             background_color_cell="#75801F"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromMS())
         self.add_widget(self.MSTable)
         self.add_widget(self.back_button)
@@ -1181,7 +1181,7 @@ class ViewTournamentStatistics(Screen):
             background_color_header="#5F209D",
             background_color_cell="#330E57"
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromrunt())
         self.add_widget(self.toprun_table)
         self.add_widget(self.back_button)
@@ -1210,7 +1210,7 @@ class ViewTournamentStatistics(Screen):
             background_color_header="#5F209D",
             background_color_cell="#330E57",
             )
-        self.back_button = Button(text='[font=fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
+        self.back_button = Button(text='[font=assets/fonts/Merriweather-Black]back[/font]', markup=True, bold=True, font_size=25, size_hint=(1, 0.1), halign='center', valign='bottom')
         self.back_button.bind(on_release=lambda backButton: self.back_fromwickett())
         self.add_widget(self.topwicket_table)
         self.add_widget(self.back_button)
@@ -1228,7 +1228,7 @@ class ViewTournamentStatistics(Screen):
 class WindowManager(ScreenManager):
     pass
 
-kv = Builder.load_file("homepage.kv")
+kv = Builder.load_file("main.kv")
 
 class CTMSApp(MDApp):
     def build(self):
