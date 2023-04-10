@@ -61,14 +61,15 @@ def resetDB():
     cursor.execute(f'DROP TABLE IF EXISTS MD{i + 1}')
   sqliteConnect.commit()
   init()
+  generateTeams()
 
 # Generate teams, along with players
-def generateTeams(n = 8):
+def generateTeams(n = 10):
   global sqliteConnect, cursor
   for team in range(n):
     # Create team, decide captain, number of batsmen, allrounders, and wicketkeepers. Bowlers are the rest.
     cursor.execute('INSERT INTO TT(Teams) VALUES(?)', (f'Team {team + 1}',))
-    cursor.execute(f'CREATE TABLE TD{team + 1} (PlayerID INT PRIMARY KEY, isCaptain BOOLEAN, isBatsman BOOLEAN, isBowler BOOLEAN, isWK BOOLEAN, FOREIGN KEY(PlayerID) REFERENCES PD(ID))')
+    cursor.execute(f'CREATE TABLE IF NOT EXISTS TD{team + 1} (PlayerID INT PRIMARY KEY, isCaptain BOOLEAN, isBatsman BOOLEAN, isBowler BOOLEAN, isWK BOOLEAN, FOREIGN KEY(PlayerID) REFERENCES PD(ID))')
     captain = random.randint(0, 11)
     batsmen = random.randint(4, 6) # 4-6 batsmen
     allrounders = random.randint(1,3) # 1-3 allrounders
@@ -127,6 +128,7 @@ def printMatches():
 # Print the teams
 def printTeams():
   global sqliteConnect, cursor
+  global TeamArray
   TeamArray = cursor.execute('SELECT * FROM TT')
   for i in TeamArray:
     print("Team", i[0], ": ", i[1])
@@ -150,12 +152,14 @@ def getTournamentStats():
   global sqliteConnect, cursor
   print("Top 5 Run Scorers:")
   print("Player Name\t\tTeam\t\tRuns Scored")
+  global runs
   runs = cursor.execute('SELECT PD.Name, TT.Teams, PD.RunsScored FROM PD LEFT JOIN TT ON PD.TeamID = TT.ID ORDER BY PD.RunsScored DESC LIMIT 5').fetchall()
   for i in runs:
     print(i[0], "\t\t", i[1], "\t\t", i[2], sep="")
   print()
   print("Top 5 Wicket Takers:")
   print("Player Name\t\tTeam\t\tWickets Taken")
+  global wickets
   wickets = cursor.execute('SELECT PD.Name, TT.Teams, PD.WicketsTaken FROM PD LEFT JOIN TT ON PD.TeamID = TT.ID ORDER BY PD.WicketsTaken DESC LIMIT 5').fetchall()
   for i in wickets:
     print(i[0], "\t\t", i[1], "\t\t", i[2], sep="")
@@ -501,11 +505,18 @@ def generateDetails(matchID):
   sqliteConnect.commit()
   
 def closeConn():
+  global sqliteConnect, cursor
   sqliteConnect.close()
   sys.exit(0)
-    
+
+def returncursor():
+  global sqliteConnect, cursor
+  return cursor
+
 if __name__ == '__main__':
   init()
+  global sqliteConnect, cursor
+  cursor = returncursor()
   choice = input('Do you want to reset? (y/n): ')
   if (choice == 'y' or choice == 'Y'):
     resetDB()
